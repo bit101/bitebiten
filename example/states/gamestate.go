@@ -26,6 +26,7 @@ type GameState struct {
 	ship      *component.ImageView
 	anim      *component.AnimView
 	explosion *component.Explosion
+	game      *game.Game
 }
 
 func NewGameState() *GameState {
@@ -33,6 +34,7 @@ func NewGameState() *GameState {
 }
 
 func (s *GameState) Init(gameRef *game.Game) {
+	s.game = gameRef
 	// init text position
 	s.y = 20
 
@@ -53,6 +55,7 @@ func (s *GameState) Init(gameRef *game.Game) {
 }
 
 func (s *GameState) Update() error {
+	s.game.SetPointer(false)
 	// update text
 	s.x++
 	if s.x > world.GetWidthInt() {
@@ -60,6 +63,13 @@ func (s *GameState) Update() error {
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
 		os.Exit(0)
+	}
+
+	// is pointer over ship? set cursor to pointer
+	cx, cy := ebiten.CursorPosition()
+	if cx > world.GetWidthInt()/2-15 && cx < world.GetWidthInt()/2+15 &&
+		cy > world.GetHeightInt()/2-15 && cy < world.GetHeightInt()/2+15 {
+		s.game.SetPointer(true)
 	}
 
 	// update ship
@@ -79,6 +89,8 @@ func (s *GameState) Update() error {
 		s.explosion.Start()
 	}
 	s.explosion.Update()
+
+	s.game.UpdateCursor()
 
 	return nil
 }
