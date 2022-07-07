@@ -1,9 +1,6 @@
 package main
 
 import (
-	_ "embed"
-	_ "image/png"
-
 	"github.com/bit101/bitebiten/example/states"
 	"github.com/bit101/bitebiten/game"
 	"github.com/hajimehoshi/ebiten/v2"
