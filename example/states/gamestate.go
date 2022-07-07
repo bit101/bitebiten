@@ -21,10 +21,11 @@ var shipImg []byte
 var anim []byte
 
 type GameState struct {
-	x    int
-	y    int
-	ship *component.ImageView
-	anim *component.AnimView
+	x         int
+	y         int
+	ship      *component.ImageView
+	anim      *component.AnimView
+	explosion *component.Explosion
 }
 
 func NewGameState() *GameState {
@@ -46,6 +47,9 @@ func (s *GameState) Init(gameRef *game.Game) {
 	s.anim = component.NewAnimView("anim", 40, 40, 25, 5)
 	s.anim.SetPos(100, 100)
 	s.anim.SetRegistration(20, 20)
+
+	// init explosion
+	s.explosion = component.NewExplosion(100)
 }
 
 func (s *GameState) Update() error {
@@ -67,6 +71,15 @@ func (s *GameState) Update() error {
 	if s.anim.Y > world.GetHeight() {
 		s.anim.Y = 0
 	}
+
+	// update explosion
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		x, y := ebiten.CursorPosition()
+		s.explosion.SetPos(float64(x), float64(y))
+		s.explosion.Start()
+	}
+	s.explosion.Update()
+
 	return nil
 }
 
@@ -79,4 +92,7 @@ func (s *GameState) Draw(screen *ebiten.Image) {
 
 	// draw anim
 	s.anim.Draw(screen)
+
+	// draw explosion
+	s.explosion.Draw(screen)
 }
