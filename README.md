@@ -15,6 +15,8 @@ Technically, it's `bit ebiten` not `bite biten`, though I usually prounounce it 
 
 This is *not* any kind of entity component system, in case you're wondering.
 
+Check the example folder to see some of this stuff in action.
+
 ## Todo:
 
 * Stacks for the state machine, so you can push a new state on, then pop it off and go back to the previous state and have it in the exact same ... state .. where you left it.
