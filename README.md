@@ -13,6 +13,8 @@ Technically, it's `bit ebiten` not `bite biten`, though I usually prounounce it 
 * An actor model (think sprite), with additional actor types for images, sprite sheet animations, explosions. Probably more to come here.
 * Some utils modules for stuff like color, points, and some geometry stuff.
 
+This is *not* any kind of entity component system, in case you're wondering.
+
 ## Todo:
 
 * Stacks for the state machine, so you can push a new state on, then pop it off and go back to the previous state and have it in the exact same ... state .. where you left it.
