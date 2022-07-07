@@ -3,6 +3,7 @@ package game
 import (
 	"log"
 
+	"github.com/bit101/bitebiten/world"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -18,11 +19,14 @@ type Game struct {
 	isPointer     bool
 }
 
-func NewGame(w, h int, title string, firstState State) *Game {
-	ebiten.SetWindowSize(w, h)
+func NewGame(w, h float64, title string, firstState State) *Game {
+	world.SetSize(w, h)
+
+	iw, ih := int(w), int(h)
+	ebiten.SetWindowSize(iw, ih)
 	ebiten.SetWindowTitle(title)
 
-	game := &Game{width: w, height: h}
+	game := &Game{width: iw, height: ih}
 	game.isPointer = false
 	game.SetState(firstState)
 	err := ebiten.RunGame(game)
