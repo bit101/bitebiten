@@ -7,9 +7,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// implements IActor
 type Actor struct {
-	x, y, rotation float64
+	X, Y, Rotation float64
 }
 
 func NewActor() *Actor {
@@ -18,37 +17,25 @@ func NewActor() *Actor {
 
 func (c *Actor) Draw(screen *ebiten.Image) {
 	opts := &ebiten.DrawImageOptions{}
-	opts.GeoM.Rotate(c.rotation)
-	opts.GeoM.Translate(c.x, c.y)
+	opts.GeoM.Rotate(c.Rotation)
+	opts.GeoM.Translate(c.X, c.Y)
 }
 
 func (c *Actor) MoveBy(x, y float64) {
-	c.x += x
-	c.y += y
+	c.X += x
+	c.Y += y
 }
 
 func (c *Actor) SetPos(x, y float64) {
-	c.x, c.y = x, y
+	c.X, c.Y = x, y
 }
 
 func (c *Actor) GetPos() *utils.Point {
-	return utils.NewPoint(c.x, c.y)
-}
-
-func (c *Actor) RotateBy(r float64) {
-	c.rotation += r
-}
-
-func (c *Actor) SetRotation(r float64) {
-	c.rotation = r
-}
-
-func (c *Actor) GetRotation() float64 {
-	return c.rotation
+	return utils.NewPoint(c.X, c.Y)
 }
 
 func (c *Actor) Distance(x, y float64) float64 {
-	dx := x - c.x
-	dy := y - c.y
+	dx := x - c.X
+	dy := y - c.Y
 	return math.Sqrt(dx*dx + dy*dy)
 }

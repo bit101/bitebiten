@@ -7,30 +7,36 @@ import (
 
 type ImageView struct {
 	Actor
-	image *ebiten.Image
+	regX, regY float64
+	image      *ebiten.Image
 }
 
-func NewImageView(name string, x, y float64) *ImageView {
+func NewImageView(name string) *ImageView {
 	img := &ImageView{}
-	img.SetPos(-x, -y) // sets the registration point by moving origin in opposite direction
 	img.SetImage(name)
 	return img
 }
 
-func (c *ImageView) SetImage(name string) {
-	c.image = assetmanager.GetImage(name)
+func (i *ImageView) SetImage(name string) {
+	i.image = assetmanager.GetImage(name)
 }
 
-func (c *ImageView) GetImage() *ebiten.Image {
-	return c.image
+func (i *ImageView) GetImage() *ebiten.Image {
+	return i.image
 }
 
-func (c *ImageView) Draw(screen *ebiten.Image) {
+func (i *ImageView) SetRegistration(x, y float64) {
+	i.regX = -x
+	i.regY = -y
+}
+
+func (i *ImageView) Draw(screen *ebiten.Image) {
 	opts := &ebiten.DrawImageOptions{}
-	opts.GeoM.Rotate(c.GetRotation())
-	opts.GeoM.Translate(c.x, c.y)
+	opts.GeoM.Translate(i.regX, i.regY)
+	opts.GeoM.Rotate(i.Rotation)
+	opts.GeoM.Translate(i.X, i.Y)
 
-	if c.image != nil {
-		screen.DrawImage(c.image, opts)
+	if i.image != nil {
+		screen.DrawImage(i.image, opts)
 	}
 }

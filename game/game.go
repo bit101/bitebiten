@@ -8,9 +8,9 @@ import (
 )
 
 type State interface {
+	Init(game *Game)
 	Update() error
 	Draw(screen *ebiten.Image)
-	Init(game *Game)
 }
 
 type Game struct {
@@ -53,6 +53,10 @@ func (g *Game) SetState(newState State) {
 	newState.Init(g)
 }
 
+// cursor management
+// set pointer false at start of frame
+// set pointer true within frame if over something interactive
+// call update cursor at end of frame
 func (g *Game) SetPointer(b bool) {
 	g.isPointer = b
 }
